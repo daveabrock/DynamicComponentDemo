@@ -1,0 +1,26 @@
+@page "/"
+
+<h1>Loan application</h1>
+
+<div class="col-4">
+    What is your current living situation?
+    <select @onchange="OnDropdownChange" class="form-control">
+        <option value="@nameof(DefaultDropdownComponent)">Select a value</option>
+        <option value="@nameof(RentComponent)">Rent</option>
+        <option value="@nameof(OwnHouseComponent)">Own house</option>
+        <option value="@nameof(OwnCondoComponent)">Own condo or townhouse</option>
+        <option value="@nameof(DaveRoommate)">I'm Dave's roommate</option>
+    </select>
+    <br />
+    <DynamicComponent Type="selectedType" />
+</div>
+
+@code
+{
+    Type selectedType = typeof(DefaultDropdownComponent);
+
+    public void OnDropdownChange(ChangeEventArgs myArgs)
+    {
+        selectedType = Type.GetType($"DynamicComponentDemo.Shared.{myArgs.Value}");
+    }
+}
